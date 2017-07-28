@@ -5,7 +5,7 @@ var bounds = [
 mapboxgl.accessToken = 'pk.eyJ1Ijoic2x1c2Fyc2tpZGRldHJvaXRtaSIsImEiOiJjaXZsNXlwcXQwYnY5MnlsYml4NTJ2Mno4In0.8wKUnlMPIlxq-eWH0d10-Q';
 var map = new mapboxgl.Map({
   container: 'map', // container id
-  style: 'mapbox://styles/slusarskiddetroitmi/cj0wo7j6c00t72rqplk8a2m97', //stylesheet location
+  style: 'mapbox://styles/slusarskiddetroitmi/cj58f1ib64x352sp8150mpl5j', //stylesheet location
   center: [-83.1, 42.36], // starting position
   zoom: 10.5, // starting zoom
   maxBounds: bounds
@@ -18,19 +18,19 @@ map.on('load', function(window) {
 
   map.addSource('offices', {
     type: 'geojson',
-    data: 'https://gis.detroitmi.gov/arcgis/rest/services/DHD/HealthCareProviders/MapServer/0/query?where=1%3D1&text=&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&relationParam=&outFields=*&returnGeometry=true&returnTrueCurves=false&maxAllowableOffset=&geometryPrecision=5&outSR=4326&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=false&resultOffset=&resultRecordCount=&f=geojson'
+    data: 'http://gis.detroitmi.gov/arcgis/rest/services/DoIT/LARC/MapServer/0/query?where=1%3D1&text=&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&relationParam=&outFields=*&returnGeometry=true&returnTrueCurves=false&maxAllowableOffset=&geometryPrecision=&outSR=&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=false&resultOffset=&resultRecordCount=&f=geojson'
   });
 
-  map.addLayer({
-    "id": "councils-fill",
-    "type": "fill",
-    "source": "councils",
-    "layout": {},
-    "paint": {
-      "fill-color": "#1874BC",
-      "fill-opacity": 0.2,
-    }
-  });
+//  map.addLayer({
+//    "id": "councils-fill",
+//    "type": "fill",
+//    "source": "councils",
+//    "layout": {},
+//    "paint": {
+//      "fill-color": "#1874BC",
+//      "fill-opacity": 0.2,
+//    }
+//  });
 
   map.addLayer({
     "id": "councils-borders",
@@ -48,7 +48,8 @@ map.on('load', function(window) {
       'type': 'symbol',
       'source': 'offices',
       'layout': {
-        'icon-image': 'marker-15'
+        'icon-image': 'circle-11',
+        'icon-allow-overlap': true
       },
       'paint': {}
   });
@@ -69,3 +70,7 @@ document.querySelectorAll('.filter-group input[type=checkbox]').forEach(function
   });
 });
 document.getElementById('close-emergency-modal-btn').addEventListener('click', closeInfo);
+
+map.addControl(new MapboxGeocoder({
+    accessToken: mapboxgl.accessToken
+}));

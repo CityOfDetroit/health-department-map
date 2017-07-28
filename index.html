@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
 
-  <title>Health Departmet Map</title>
+  <title>Detroit Health Department - LARC locations</title>
   <meta name="description" content="Health Department Map">
   <meta name="author" content="Edgar Montes & Dexter Slursarski">
   <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
@@ -12,6 +12,8 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
   <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v0.29.0/mapbox-gl.js"></script>
   <script src='https://api.mapbox.com/mapbox.js/plugins/turf/v2.0.2/turf.min.js'></script>
+  <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.1.0/mapbox-gl-geocoder.min.js'></script>
+  <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.1.0/mapbox-gl-geocoder.css' type='text/css' />
 </head>
 <body>
   <main>
@@ -23,14 +25,11 @@
         <article class="street-name"></article>
         <article class="district"></article>
         <article class="provider"></article>
-        <article class="garbage">
-          <span>Hours</span>
-          <strong>Mon:</strong> 9:00AM - 5:00PM
-          <br><strong>Tue:</strong>&nbsp; 9:00AM - 5:00PM
-          <br><strong>Wed:</strong> 9:00AM - 5:00PM
-          <br><strong>Thu:</strong>&nbsp; 9:00AM - 5:00PM
-          <br><strong>Fri:</strong>&nbsp;&nbsp; 9:00AM - 5:00PM
-        </article>
+        <article class="larc-type"></article>
+        <article class="age-type"></article>
+        <article class="std-testing"></article>
+        <article class="other-media"></article>
+        <article class="offer_abor"></article>
         <!-- <article class="recycle"></article>
         <article class="bulk"></article>
         <article class="yard"></article> -->

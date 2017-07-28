@@ -11,8 +11,11 @@ main {position: relative; width: 100%; height: 100vh; overflow: hidden;}
 .info-container > .recycle > span{color: #068A24}
 .info-container > .bulk > span{color: #114BC7}
 .info-container > .yard > span{color: #DF5800}
+.info-container > .larc-type{border: 1px solid #cdcac7; margin: 1em; position: relative; padding: 1em;}
+.info-container > .age-type{border: 1px solid #cdcac7; margin: 1em; position: relative; padding: 1em;}
+.info-container > .std-testing{border: 1px solid #cdcac7; margin: 1em; position: relative; padding: 1em;}
 .info-container > .note{border: 1px solid #cdcac7; font-size: 80%; margin: 1em 1.25em; position: relative; padding: 1em;}
-.info-container > .note > span, .info-container > .bulk > span, .info-container > .recycle > span, .info-container > .garbage > span, .info-container > .provider > span, .info-container > .yard > span, .info-container > .district > span{position: absolute; top: -.75em; left: 1em; background-color: #fff; padding: 0 .5em; font-weight: bold}
+.info-container > .note > span, .info-container > .bulk > span, .info-container > .recycle > span, .info-container > .garbage > span, .info-container > .provider > span, .info-container > .larc-type > span,.info-container > .age-type > span,.info-container > .std-testing > span, .info-container > .district > span,  .info-container > .district > span{position: absolute; top: -.75em; left: 1em; background-color: #fff; padding: 0 .5em; font-weight: bold}
 .info-container > .subscribe{text-align: center;}
 .info-container > .subscribe > form > button{padding: .5em; background-color: #EB002B; color: #fff; border: none; font-size: 1em; cursor: pointer; transition: all 0.2s ease-in-out; margin-top: 1em;}
 .info-container > .subscribe > form > button:hover{padding: .7em; transition: all 0.2s ease-in-out;}

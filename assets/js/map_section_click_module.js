@@ -19,16 +19,12 @@ var mapSectionClickModule = (function(informationCard){
             return t;
         }
     });
-    document.querySelector('.info-container > .street-name').innerHTML = feature.properties.Office;
-    document.querySelector('.info-container > .district').innerHTML = '<span>Address:</span> ' + feature.properties.ADDRESS + '<br>' + feature.properties.CITY + ', ' + feature.properties.STATE + ' ' + feature.properties.Zip_Code;
-    document.querySelector('.info-container > .provider').innerHTML = '<span>Phone:</span> ' + formatPhoneNumber(feature.properties.PHONE);
-    // document.querySelector('.info-container > .garbage').innerHTML = '<span>Garbage:</span> ' + capitalizeFirstLetter(data.features[0].attributes.day);
-    // document.querySelector('.info-container > .recycle').innerHTML = '<span>Curbside Recycle:</span> ' + capitalizeFirstLetter(data.features[1].attributes.day) + '-' + capitalizeFirstLetter(data.features[1].attributes.week);
-    // document.querySelector('.info-container > .bulk').innerHTML = '<span>Bulk:</span> ' + capitalizeFirstLetter(data.features[2].attributes.day) + '-' + capitalizeFirstLetter(data.features[2].attributes.week);
-    // document.querySelector('.info-container > .yard').innerHTML = '<span>Yard Waste:</span> ' + capitalizeFirstLetter(data.features[2].attributes.day) + '-' + capitalizeFirstLetter(data.features[2].attributes.week);
-    // document.querySelector('.info-container > input[name="route-id"]').value = data.features[0].attributes.FID + ',' + data.features[1].attributes.FID + ',' + data.features[2].attributes.FID;
-    // document.querySelector('.info-container > input[name="lng"]').value = e.lngLat.lng;
-    // document.querySelector('.info-container > input[name="lat"]').value = e.lngLat.lat;
+    document.querySelector('.info-container > .street-name').innerHTML = feature.properties.Affiliatio;
+    document.querySelector('.info-container > .district').innerHTML = '<span>Address:</span> ' + feature.properties.Address + '<br>' + feature.properties.City + ', ' + feature.properties.State + ' ' + feature.properties.Zip;
+    document.querySelector('.info-container > .provider').innerHTML = '<span>Phone:</span> ' + formatPhoneNumber(feature.properties.Phone_1);
+    document.querySelector('.info-container > .larc-type').innerHTML = '<span>LARC Type: </span> ' + feature.properties.LARC_Type;
+    document.querySelector('.info-container > .age-type').innerHTML = '<span>Age Range: </span> ' + feature.properties.Age_Range;
+    document.querySelector('.info-container > .std-testing').innerHTML = '<span>STD Testing: </span> ' + feature.properties.STD_Testin;
     (document.querySelector('#info').className === 'active') ? 0 : document.querySelector('#info').className = 'active';
   });
 })(window);
