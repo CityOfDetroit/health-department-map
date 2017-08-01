@@ -71,6 +71,6 @@ document.querySelectorAll('.filter-group input[type=checkbox]').forEach(function
 });
 document.getElementById('close-emergency-modal-btn').addEventListener('click', closeInfo);
 
-map.addControl(new MapboxGeocoder({
+map.addControl(new MapboxDirections({
     accessToken: mapboxgl.accessToken
-}));
+}), 'top-right');
