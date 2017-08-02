@@ -10,6 +10,12 @@ var map = new mapboxgl.Map({
   zoom: 10.5, // starting zoom
   maxBounds: bounds
 });
+var directions = new MapboxDirections({
+   accessToken: mapboxgl.accessToken
+ });
+// add to your mapboxgl map
+// map.addControl(directions, 'top-right');
+console.log('added directions');
 map.on('load', function(window) {
   map.addSource('councils', {
     type: 'geojson',
@@ -42,35 +48,65 @@ map.on('load', function(window) {
       "line-width": 2
     }
   });
-
-  map.addLayer({
-      'id': 'offices',
-      'type': 'symbol',
-      'source': 'offices',
-      'layout': {
-        'icon-image': 'circle-11',
-        'icon-allow-overlap': true
-      },
-      'paint': {}
-  });
-  map.on('mousemove', function (e) {
-      var features = map.queryRenderedFeatures(e.point, { layers: ['offices'] });
-      map.getCanvas().style.cursor = features.length ? 'pointer' : '';
+  map.loadImage('assets/img/hearts.png', function(error, image) {
+        if (error) throw error;
+        map.addImage('heart', image);
+        map.addLayer({
+            "id": "offices",
+            "type": "symbol",
+            "source": 'offices',
+            "layout": {
+                "icon-image": "heart",
+                "icon-size": 0.5
+            }
+        });
+    });
+  map.on("mousemove", function(e) {
+    var features = map.queryRenderedFeatures(e.point, {
+      layers: ["offices"]
+    });
+    map.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
   });
 });
 var closeInfo = function closeInfo() {
   (document.querySelector('#info').className === 'active') ? document.querySelector('#info').className = '' : document.querySelector('#info').className = 'active';
+  map.removeControl(directions);
+  document.getElementById('directions-btn').disabled = false;
 };
 function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
+
+document.addEventListener("DOMContentLoaded", function(event) {
+  if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(successFunction, errorFunction);
+  } else {
+      alert('It seems like Geolocation, which is required for this page, is not enabled in your browser. Please use a browser which supports it.');
+  }
+});
+
 document.querySelectorAll('.filter-group input[type=checkbox]').forEach(function(item) {
   item.addEventListener('click',function(e){
     toggleMapLayers(e);
   });
 });
+
+function successFunction(position) {
+    var lat = position.coords.latitude;
+    var long = position.coords.longitude;
+    console.log('Your latitude is :'+lat+' and longitude is '+long);
+    directions = directions.setOrigin([long,lat]);
+}
+function errorFunction(e){
+  alert("Geolocation permission was denied. Please enable Geolocation.")
+}
+
 document.getElementById('close-emergency-modal-btn').addEventListener('click', closeInfo);
 
-map.addControl(new MapboxDirections({
-    accessToken: mapboxgl.accessToken
-}), 'top-right');
+var loadDirections = function loadDirections(){
+  document.getElementById('directions-btn').disabled = true;
+  directions.setDestination([document.querySelector('.info-container input[name="lng"]').value, document.querySelector('.info-container input[name="lat"]').value]);
+  map.addControl(directions, 'top-right');
+};
+
+document.getElementById('directions-btn').addEventListener('click', loadDirections);

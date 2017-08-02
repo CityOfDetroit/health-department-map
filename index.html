@@ -7,21 +7,17 @@
   <meta name="description" content="Health Department Map">
   <meta name="author" content="Edgar Montes & Dexter Slursarski">
   <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.29.0/mapbox-gl.css' rel='stylesheet' />
+  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.39.1/mapbox-gl.css' rel='stylesheet' />
   <link href='assets/css/styles.v1.css' rel='stylesheet' />
+  <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v3.1.1/mapbox-gl-directions.css' type='text/css' />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-  <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v0.29.0/mapbox-gl.js"></script>
-  <script src='https://api.mapbox.com/mapbox.js/plugins/turf/v2.0.2/turf.min.js'></script>
-  <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.1.0/mapbox-gl-geocoder.min.js'></script>
-  <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.1.0/mapbox-gl-geocoder.css' type='text/css' />
+  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.39.1/mapbox-gl.js'></script>
+  <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v3.1.1/mapbox-gl-directions.js'></script>
 </head>
 <body>
-  <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v3.1.1/mapbox-gl-directions.js'></script>
-  <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v3.1.1/mapbox-gl-directions.css' type='text/css' />
   <main>
     <section id="info">
       <section class="info-container">
-        <input type="hidden" name="route-id" value="">
         <input type="hidden" name="lng" value="">
         <input type="hidden" name="lat" value="">
         <article class="street-name"></article>
@@ -32,9 +28,9 @@
         <article class="std-testing"></article>
         <article class="other-media"></article>
         <article class="offer_abor"></article>
-        <!-- <article class="recycle"></article>
-        <article class="bulk"></article>
-        <article class="yard"></article> -->
+        <article class="directions">
+          <button class="btn btn-red" id="directions-btn">GET DIRECTIONS</button>
+        </article>
         <article id="close-emergency-modal-btn">
           <img src="assets/img/error.png" alt="close"></img>
         </article>
