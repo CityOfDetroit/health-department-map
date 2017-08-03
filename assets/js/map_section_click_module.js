@@ -20,6 +20,7 @@ var mapSectionClickModule = (function(informationCard){
               return t;
           }
       });
+      document.querySelector('.mapboxgl-ctrl-directions.mapboxgl-ctrl').style.display = "none";
       document.querySelector('.info-container input[name="lng"]').value = e.lngLat.lng;
       document.querySelector('.info-container input[name="lat"]').value = e.lngLat.lat;
       document.querySelector('.info-container > .street-name').innerHTML = feature.properties.Affiliatio;

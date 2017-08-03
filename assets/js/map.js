@@ -11,10 +11,14 @@ var map = new mapboxgl.Map({
   maxBounds: bounds
 });
 var directions = new MapboxDirections({
-   accessToken: mapboxgl.accessToken
+   accessToken: mapboxgl.accessToken,
+   controls: {
+     inputs: false,
+     instructions: true
+   }
  });
 // add to your mapboxgl map
-// map.addControl(directions, 'top-right');
+map.addControl(directions, 'top-right');
 console.log('added directions');
 map.on('load', function(window) {
   map.addSource('councils', {
@@ -26,17 +30,6 @@ map.on('load', function(window) {
     type: 'geojson',
     data: 'https://gis.detroitmi.gov/arcgis/rest/services/DoIT/LARC/MapServer/0/query?where=1%3D1&text=&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&relationParam=&outFields=*&returnGeometry=true&returnTrueCurves=false&maxAllowableOffset=&geometryPrecision=&outSR=&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=false&resultOffset=&resultRecordCount=&f=geojson'
   });
-
-//  map.addLayer({
-//    "id": "councils-fill",
-//    "type": "fill",
-//    "source": "councils",
-//    "layout": {},
-//    "paint": {
-//      "fill-color": "#1874BC",
-//      "fill-opacity": 0.2,
-//    }
-//  });
 
   map.addLayer({
     "id": "councils-borders",
@@ -70,8 +63,6 @@ map.on('load', function(window) {
 });
 var closeInfo = function closeInfo() {
   (document.querySelector('#info').className === 'active') ? document.querySelector('#info').className = '' : document.querySelector('#info').className = 'active';
-  map.removeControl(directions);
-  document.getElementById('directions-btn').disabled = false;
 };
 function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
@@ -83,6 +74,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
   } else {
       alert('It seems like Geolocation, which is required for this page, is not enabled in your browser. Please use a browser which supports it.');
   }
+  console.log(map);
 });
 
 document.querySelectorAll('.filter-group input[type=checkbox]').forEach(function(item) {
@@ -104,9 +96,9 @@ function errorFunction(e){
 document.getElementById('close-emergency-modal-btn').addEventListener('click', closeInfo);
 
 var loadDirections = function loadDirections(){
-  document.getElementById('directions-btn').disabled = true;
   directions.setDestination([document.querySelector('.info-container input[name="lng"]').value, document.querySelector('.info-container input[name="lat"]').value]);
-  map.addControl(directions, 'top-right');
+  document.querySelector('.mapboxgl-ctrl-directions.mapboxgl-ctrl').style.display = "block";
+  closeInfo();
 };
 
 document.getElementById('directions-btn').addEventListener('click', loadDirections);
