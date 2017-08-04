@@ -6,8 +6,8 @@ mapboxgl.accessToken = 'pk.eyJ1Ijoic2x1c2Fyc2tpZGRldHJvaXRtaSIsImEiOiJjaXZsNXlwc
 var map = new mapboxgl.Map({
   container: 'map', // container id
   style: 'mapbox://styles/slusarskiddetroitmi/cj58f1ib64x352sp8150mpl5j', //stylesheet location
-  center: [-83.1, 42.36], // starting position
-  zoom: 10.5, // starting zoom
+  center: [-83.02797,42.4112], // starting position
+  zoom: 13, // starting zoom
   maxBounds: bounds
 });
 var directions = new MapboxDirections({
@@ -18,18 +18,40 @@ var directions = new MapboxDirections({
    }
  });
 // add to your mapboxgl map
-map.addControl(directions, 'top-right');
-console.log('added directions');
 map.on('load', function(window) {
+
+// adding district 3
   map.addSource('councils', {
     type: 'geojson',
-    data: 'https://gis.detroitmi.gov/arcgis/rest/services/NeighborhoodsApp/council_district/MapServer/1/query?where=1%3D1&text=&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&relationParam=&outFields=*&returnGeometry=true&returnTrueCurves=false&maxAllowableOffset=&geometryPrecision=5&outSR=4326&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=false&resultOffset=&resultRecordCount=&f=geojson'
+    data: 'http://gis.detroitmi.gov/arcgis/rest/services/NeighborhoodsApp/council_district/MapServer/1/query?where=districts%3D%273%27&text=&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&relationParam=&outFields=&returnGeometry=true&returnTrueCurves=false&maxAllowableOffset=&geometryPrecision=&outSR=&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=false&resultOffset=&resultRecordCount=&f=geojson'
   });
 
-  map.addSource('offices', {
+  map.addSource('council-label', {
     type: 'geojson',
-    data: 'https://gis.detroitmi.gov/arcgis/rest/services/DoIT/LARC/MapServer/0/query?where=1%3D1&text=&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&relationParam=&outFields=*&returnGeometry=true&returnTrueCurves=false&maxAllowableOffset=&geometryPrecision=&outSR=&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=false&resultOffset=&resultRecordCount=&f=geojson'
+    data: 'http://gis.detroitmi.gov/arcgis/rest/services/Boundaries/Council_Districts/MapServer/0/query?where=number%3D3&text=&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&relationParam=&outFields=&returnGeometry=true&returnTrueCurves=false&maxAllowableOffset=&geometryPrecision=&outSR=&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=false&resultOffset=&resultRecordCount=&f=geojson'
   });
+
+
+// total demolitions
+  map.addSource('demolitions', {
+    type: 'geojson',
+    data: 'https://data.detroitmi.gov/resource/uzpg-2pfj.geojson?council_district=3'
+  });
+
+  // upcoming demolitions
+
+  map.addSource('upcoming-demolitions', {
+    type: 'geojson',
+    data: 'https://data.detroitmi.gov/resource/nfx3-ihbp.geojson?council_district=3'
+  });
+
+
+  map.addSource('events', {
+    type: 'geojson',
+    data: 'https://services2.arcgis.com/qvkbeam7Wirps6zC/ArcGIS/rest/services/D3_Events/FeatureServer/0/query?where=1%3D1&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&resultType=none&distance=0.0&units=esriSRUnit_Meter&returnGeodetic=false&outFields=*&returnGeometry=true&multipatchOption=xyFootprint&maxAllowableOffset=&geometryPrecision=&outSR=4326&returnIdsOnly=false&returnCountOnly=false&returnExtentO'
+  });
+
+
 
   map.addLayer({
     "id": "councils-borders",
@@ -41,22 +63,46 @@ map.on('load', function(window) {
       "line-width": 2
     }
   });
-  map.loadImage('assets/img/hearts.png', function(error, image) {
+
+  map.addLayer({
+    "id": "councils-label",
+    "type": "symbol",
+    "source": "councils-label",
+  });
+
+
+  map.loadImage('assets/img/cross-green.png', function(error, image) {
         if (error) throw error;
-        map.addImage('heart', image);
+        map.addImage('cross-green', image);
         map.addLayer({
-            "id": "offices",
+            "id": "demolitions",
             "type": "symbol",
-            "source": 'offices',
+            "source": 'demolitions',
             "layout": {
-                "icon-image": "heart",
-                "icon-size": 0.5
+                "icon-image": "cross-green",
+                "icon-size": 1
             }
         });
+
+        map.loadImage('assets/img/cross-red.png', function(error, image) {
+                if (error) throw error;
+                map.addImage('cross-red', image);
+                map.addLayer({
+                    "id": "upcoming-demolitions",
+                    "type": "symbol",
+                    "source": 'upcoming-demolitions',
+                    "layout": {
+                    "icon-image": "cross-red",
+                    "icon-size": 1
+                          }
+                      });
+                        });
+
+
     });
   map.on("mousemove", function(e) {
     var features = map.queryRenderedFeatures(e.point, {
-      layers: ["offices"]
+      layers: ["demolitions"]
     });
     map.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
   });
@@ -83,22 +129,6 @@ document.querySelectorAll('.filter-group input[type=checkbox]').forEach(function
   });
 });
 
-function successFunction(position) {
-    var lat = position.coords.latitude;
-    var long = position.coords.longitude;
-    console.log('Your latitude is :'+lat+' and longitude is '+long);
-    directions = directions.setOrigin([long,lat]);
-}
-function errorFunction(e){
-  alert("Geolocation permission was denied. Please enable Geolocation.")
-}
+
 
 document.getElementById('close-emergency-modal-btn').addEventListener('click', closeInfo);
-
-var loadDirections = function loadDirections(){
-  directions.setDestination([document.querySelector('.info-container input[name="lng"]').value, document.querySelector('.info-container input[name="lat"]').value]);
-  document.querySelector('.mapboxgl-ctrl-directions.mapboxgl-ctrl').style.display = "block";
-  closeInfo();
-};
-
-document.getElementById('directions-btn').addEventListener('click', loadDirections);

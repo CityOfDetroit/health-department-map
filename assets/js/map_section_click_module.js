@@ -6,7 +6,7 @@ var mapSectionClickModule = (function(informationCard){
   };
   map.on('click', function (e) {
     console.log(e);
-    var features = map.queryRenderedFeatures(e.point, { layers: ['offices'] });
+    var features = map.queryRenderedFeatures(e.point, { layers: ['demolitions'] });
     if(features.length){
       let feature = features[0];
       console.log(feature);
@@ -20,15 +20,16 @@ var mapSectionClickModule = (function(informationCard){
               return t;
           }
       });
-      document.querySelector('.mapboxgl-ctrl-directions.mapboxgl-ctrl').style.display = "none";
+
+
+
       document.querySelector('.info-container input[name="lng"]').value = e.lngLat.lng;
-      document.querySelector('.info-container input[name="lat"]').value = e.lngLat.lat;
-      document.querySelector('.info-container > .street-name').innerHTML = feature.properties.Affiliatio;
-      document.querySelector('.info-container > .district').innerHTML = '<span>Address:</span> ' + feature.properties.Address + '<br>' + feature.properties.City + ', ' + feature.properties.State + ' ' + feature.properties.Zip;
-      document.querySelector('.info-container > .provider').innerHTML = '<span>Phone:</span> ' + formatPhoneNumber(feature.properties.Phone_1);
-      document.querySelector('.info-container > .larc-type').innerHTML = '<span>LARC Type: </span> ' + feature.properties.LARC_Type;
-      document.querySelector('.info-container > .age-type').innerHTML = '<span>Age Range: </span> ' + feature.properties.Age_Range;
-      document.querySelector('.info-container > .std-testing').innerHTML = '<span>STD Testing: </span> ' + feature.properties.STD_Testin;
+            document.querySelector('.info-container input[name="lat"]').value = e.lngLat.lat;
+            document.querySelector('.info-container > .street-name').innerHTML = feature.properties.address;
+            document.querySelector('.info-container > .parcel_id').innerHTML = '<span>Parcel ID:</span> ' + feature.properties.parcel_id;
+            document.querySelector('.info-container > .contractor_name').innerHTML = '<span>Contractor:</span> ' + feature.properties.contractor_name;
+            document.querySelector('.info-container > .demo-date').innerHTML = '<span>Demolished On:</span> ' + feature.properties.demolition_date;
+            document.querySelector('.info-container > .demo-cost').innerHTML = '<span>Cost of Demolition:</span> ' + feature.properties.price;
       (document.querySelector('#info').className === 'active') ? 0 : document.querySelector('#info').className = 'active';
     }else{
       console.log('no data for this point');
