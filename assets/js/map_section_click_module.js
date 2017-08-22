@@ -21,21 +21,25 @@ var mapSectionClickModule = (function(informationCard){
           }
 
       });
-      document.querySelector('.info-container input[name="lng"]').value = e.lngLat.lng;
-            document.querySelector('.info-container input[name="lat"]').value = e.lngLat.lat;
-            document.querySelector('.info-container > .street-name').innerHTML = feature.properties.address;
-            document.querySelector('.info-container > .facility').innerHTML = '<span>Business: </span> ' + feature.properties.facility;
-            document.querySelector('.info-container > .text').innerHTML = '<span>About:</span> ' + feature.properties.text;
-            document.querySelector('.info-container > .video_link').innerHTML = '<span>Video:</span> ' + feature.properties.video_link;
-            document.querySelector('.info-container > .parcel_id').innerHTML = '<span>Parcel ID:</span> ' + feature.properties.parcel_id;
-            document.querySelector('.info-container > .contractor_name').innerHTML = '<span>Contractor:</span> ' + feature.properties.contractor_name;
-            document.querySelector('.info-container > .demo-date').innerHTML = '<span>Demolished On:</span> ' + feature.properties.demolition_date;
-            document.querySelector('.info-container > .demo-cost').innerHTML = '<span>Cost of Demolition:</span> ' + feature.properties.price;
+      document.querySelector('.info-container > .street-name').innerHTML = feature.properties.address;
+      if(feature.properties.facility === undefined){
+        document.querySelector('.info-container > .facility').style.display = 'none';
+      }else{
+        document.querySelector('.info-container > .facility').innerHTML = '<span>Business: </span> ' + feature.properties.facility;
+      }
+      document.querySelector('.info-container > .text').innerHTML = '<span>About:</span> ' + feature.properties.text;
+      if(feature.properties.facility === undefined){
+        document.querySelector('.info-container > .facility').style.display = 'none';
+      }else{
+        var temp = feature.properties.video_link.split('/');
+        document.querySelector('.info-container > .video_link').innerHTML = '<iframe width="560" height="315" src="https://www.youtube.com/embed/'+ temp[temp.length - 1] + '" frameborder="0" allowfullscreen></iframe>';
+      }
+      document.querySelector('.info-container > .parcel_id').innerHTML = '<span>Parcel ID:</span> ' + feature.properties.parcel_id;
+      document.querySelector('.info-container > .contractor_name').innerHTML = '<span>Contractor:</span> ' + feature.properties.contractor_name;
+      document.querySelector('.info-container > .demo-date').innerHTML = '<span>Demolished On:</span> ' + feature.properties.demolition_date;
+      document.querySelector('.info-container > .demo-cost').innerHTML = '<span>Cost of Demolition:</span> ' + feature.properties.price;
       (document.querySelector('#info').className === 'active') ? 0 : document.querySelector('#info').className = 'active';
 
-      if(feature === 'undefined') {
-        feature.style.display = 'none';
-      }
 
     }else{
       features = map.queryRenderedFeatures(e.point, { layers: ['event-locations'] });
