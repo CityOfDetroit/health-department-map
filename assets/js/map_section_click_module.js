@@ -21,33 +21,49 @@ var mapSectionClickModule = (function(informationCard){
           }
 
       });
+      switch (feature.layer.id) {
+        case 'demolitions':
+
+          break;
+        case 'upcoming-demolitions':
+
+          break;
+        default:
+
+      }
       document.querySelector('.info-container > .street-name').innerHTML = feature.properties.address;
       if(feature.properties.facility === undefined){
         document.querySelector('.info-container > .facility').style.display = 'none';
       }else{
         document.querySelector('.info-container > .facility').innerHTML = '<span></span> ' + feature.properties.facility;
+        document.querySelector('.info-container > .facility').style.display = 'block';
       }
       if(feature.properties.text === undefined){
         document.querySelector('.info-container > .text').style.display = 'none';
-      }else{document.querySelector('.info-container > .text').innerHTML = '<span></span> ' + feature.properties.text;
-        }
+      }else{
+        document.querySelector('.info-container > .text').innerHTML = '<span></span> ' + feature.properties.text;
+        document.querySelector('.info-container > .text').style.display = 'block';
+      }
       if(feature.properties.video_link === undefined){
         document.querySelector('.info-container > .video_link').style.display = 'none';
       }else{
         var temp = feature.properties.video_link.split('/');
         document.querySelector('.info-container > .video_link').innerHTML = '<iframe width="340" height="315" src="https://www.youtube.com/embed/'+ temp[temp.length - 1] + '" frameborder="0" allowfullscreen></iframe>';
+        document.querySelector('.info-container > .video_link').style.display = 'block';
       }
       if (feature.properties.parcel_id === undefined){
         document.querySelector('.info-container > .parcel_id').style.display = 'none';
       }else{
-          document.querySelector('.info-container > .parcel_id').innerHTML = '<span>Parcel ID:</span> ' + feature.properties.parcel_id;
+        document.querySelector('.info-container > .parcel_id').innerHTML = '<span>Parcel ID:</span> ' + feature.properties.parcel_id;
+        document.querySelector('.info-container > .parcel_id').style.display = 'block';
       }
       if (feature.properties.demolition_date === undefined)
       {
-        document.querySelector('.info-container > demolition_date').style.display = 'none';
+        document.querySelector('.info-container > .demo-date').style.display = 'none';
       }
       else{
-        document.querySelector('.info-container > .demo-date').innerHTML = '<span>Demolished On:</span> ' + feature.properties.demolition_date;
+        document.querySelector('.info-container > .demo-date').innerHTML = '<span>Demolished On:</span> ' + feature.properties.demolition_date.split('T')[0];
+        document.querySelector('.info-container > .demo-date').style.display = 'block';
       }
 
       (document.querySelector('#info').className === 'active') ? 0 : document.querySelector('#info').className = 'active';
