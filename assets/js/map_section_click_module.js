@@ -6,33 +6,70 @@ var mapSectionClickModule = (function(informationCard){
   };
   map.on('click', function (e) {
     console.log(e);
-    var features = map.queryRenderedFeatures(e.point, { layers: ['demolitions'] });
+    var features = map.queryRenderedFeatures(e.point, { layers: ['demolitions', 'upcoming-demolitions', 'event-locations'] });
     if(features.length){
       let feature = features[0];
       console.log(feature);
       map.flyTo({
           center: [e.lngLat.lng, e.lngLat.lat],
-          zoom: 12,
+          zoom: 16,
           bearing: 0,
-          speed: 2,
+          speed: 4,
           curve: 1,
           easing: function (t) {
               return t;
           }
+
       });
-
-
-
       document.querySelector('.info-container input[name="lng"]').value = e.lngLat.lng;
             document.querySelector('.info-container input[name="lat"]').value = e.lngLat.lat;
             document.querySelector('.info-container > .street-name').innerHTML = feature.properties.address;
+            document.querySelector('.info-container > .facility').innerHTML = '<span>Business: </span> ' + feature.properties.facility;
+            document.querySelector('.info-container > .text').innerHTML = '<span>About:</span> ' + feature.properties.text;
+            document.querySelector('.info-container > .video_link').innerHTML = '<span>Video:</span> ' + feature.properties.video_link;
             document.querySelector('.info-container > .parcel_id').innerHTML = '<span>Parcel ID:</span> ' + feature.properties.parcel_id;
             document.querySelector('.info-container > .contractor_name').innerHTML = '<span>Contractor:</span> ' + feature.properties.contractor_name;
             document.querySelector('.info-container > .demo-date').innerHTML = '<span>Demolished On:</span> ' + feature.properties.demolition_date;
             document.querySelector('.info-container > .demo-cost').innerHTML = '<span>Cost of Demolition:</span> ' + feature.properties.price;
       (document.querySelector('#info').className === 'active') ? 0 : document.querySelector('#info').className = 'active';
+
+      if(feature === 'undefined') {
+        feature.style.display = 'none';
+      }
+
     }else{
-      console.log('no data for this point');
+      features = map.queryRenderedFeatures(e.point, { layers: ['event-locations'] });
+      if(features.length){
+        console.log(features[0]);
+        map.flyTo({
+            center: [e.lngLat.lng, e.lngLat.lat],
+            zoom: 12,
+            bearing: 0,
+            speed: 2,
+            curve: 1,
+            easing: function (t) {
+                return t;
+            }
+        });
+        document.querySelector('.info-container input[name="lng"]').value = e.lngLat.lng;
+              document.querySelector('.info-container input[name="lat"]').value = e.lngLat.lat;
+              document.querySelector('.info-container > .street-name').innerHTML = feature.properties.address;
+              document.querySelector('.info-container > .facility').innerHTML = '<span>Business: </span> ' + feature.properties.facility;
+              document.querySelector('.info-container > .text').innerHTML = '<span>About:</span> ' + feature.properties.text;
+              document.querySelector('.info-container > .text').innerHTML = '<span>About:</span> ' + feature.properties.video_link;
+              document.querySelector('.info-container > .parcel_id').innerHTML = '<span>Parcel ID:</span> ' + feature.properties.parcel_id;
+              document.querySelector('.info-container > .contractor_name').innerHTML = '<span>Contractor:</span> ' + feature.properties.contractor_name;
+              document.querySelector('.info-container > .demo-date').innerHTML = '<span>Demolished On:</span> ' + feature.properties.demolition_date;
+              document.querySelector('.info-container > .demo-cost').innerHTML = '<span>Cost of Demolition:</span> ' + feature.properties.price;
+        (document.querySelector('#info').className === 'active') ? 0 : document.querySelector('#info').className = 'active';
+      }else{
+        features = map.queryRenderedFeatures(e.point, { layers: ['upcoming-demolitions'] });
+        if(features.length){
+          console.log(features[0]);
+        }else{
+          console.log('no data for this point');
+        }
+      }
     }
   });
 })(window);

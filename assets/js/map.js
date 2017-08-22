@@ -5,9 +5,9 @@ var bounds = [
 mapboxgl.accessToken = 'pk.eyJ1Ijoic2x1c2Fyc2tpZGRldHJvaXRtaSIsImEiOiJjaXZsNXlwcXQwYnY5MnlsYml4NTJ2Mno4In0.8wKUnlMPIlxq-eWH0d10-Q';
 var map = new mapboxgl.Map({
   container: 'map', // container id
-  style: 'mapbox://styles/slusarskiddetroitmi/cj58f1ib64x352sp8150mpl5j', //stylesheet location
+  style: 'mapbox://styles/slusarskiddetroitmi/cj6mb6u9n8vkq2rmsdp9351ax', //stylesheet location
   center: [-83.02797,42.4112], // starting position
-  zoom: 13, // starting zoom
+  zoom: 12, // starting zoom
   maxBounds: bounds
 });
 var directions = new MapboxDirections({
@@ -48,7 +48,7 @@ map.on('load', function(window) {
 
   map.addSource('events', {
     type: 'geojson',
-    data: 'https://services2.arcgis.com/qvkbeam7Wirps6zC/ArcGIS/rest/services/D3_Events/FeatureServer/0/query?where=1%3D1&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&resultType=none&distance=0.0&units=esriSRUnit_Meter&returnGeodetic=false&outFields=*&returnGeometry=true&multipatchOption=xyFootprint&maxAllowableOffset=&geometryPrecision=&outSR=4326&returnIdsOnly=false&returnCountOnly=false&returnExtentO'
+    data: 'https://services2.arcgis.com/qvkbeam7Wirps6zC/arcgis/rest/services/D3/FeatureServer/0/query?where=1%3D1&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&resultType=none&distance=0.0&units=esriSRUnit_Meter&returnGeodetic=false&outFields=*&returnHiddenFields=false&returnGeometry=true&multipatchOption=xyFootprint&maxAllowableOffset=&geometryPrecision=&outSR=4326&returnIdsOnly=false&returnCountOnly=false&returnExtentOnly=false&returnDistinctValues=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&resultOffset=&resultRecordCount=&returnZ=false&returnM=false&quantizationParameters=&sqlFormat=none&f=pgeojson&token=x-gzcfnhA8XKlRxwEsRsB41pd_6sG4oxTj_dNLUOEF2Yvv2qu2PyRdaX5WPGfRXdHG9E3toJKIGMuQoHortzeH335AUpT4yS_s7aO3hoLqAl9dOULTZzXBnKX24dtA8yqQTRWVQahkCeIEFOcEFxRjXJVzwmVevbRfgLUmIQhmFNkKN6ZnkOhzvja3JaNLRMmUYJOO1vBN-XsgKZUXPBx8R_SXzG9HGfWGKHQEXpznz5OemyITulG-KIoKp4Xw1J'
   });
 
 
@@ -59,8 +59,8 @@ map.on('load', function(window) {
     "source": "councils",
     "layout": {},
     "paint": {
-      "line-color": "#6A6F70",
-      "line-width": 2
+      "line-color": "#0099cc",
+      "line-width": 4
     }
   });
 
@@ -70,6 +70,14 @@ map.on('load', function(window) {
     "source": "councils-label",
   });
 
+  map.addLayer({
+           id: 'event-locations',
+           type: 'symbol',
+           source: 'events',
+           layout: {
+               'icon-image': 'marker-15'
+           }
+       });
 
   map.loadImage('assets/img/cross-green.png', function(error, image) {
         if (error) throw error;
@@ -99,7 +107,11 @@ map.on('load', function(window) {
                         });
 
 
+
     });
+
+
+
   map.on("mousemove", function(e) {
     var features = map.queryRenderedFeatures(e.point, {
       layers: ["demolitions"]

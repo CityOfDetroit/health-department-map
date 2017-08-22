@@ -11,10 +11,14 @@ main {position: relative; width: 100%; height: 100vh; overflow: hidden;}
 .info-container > .recycle > span{color: #068A24}
 .info-container > .bulk > span{color: #114BC7}
 .info-container > .yard > span{color: #DF5800}
+.info-container > .facility{border: 1px solid #cdcac7; margin: 1em; position: relative; padding: 1em;}
+.info-container > .text{border: 1px solid #cdcac7; margin: 1em; position: relative; padding: 1em;}
+.info-container > .video_link{border: 1px solid #cdcac7; margin: 1em; position: relative; padding: 1em;}
 .info-container > .parcel_id{border: 1px solid #cdcac7; margin: 1em; position: relative; padding: 1em;}
 .info-container > .contractor_name{border: 1px solid #cdcac7; margin: 1em; position: relative; padding: 1em;}
 .info-container > .demo-date{border: 1px solid #cdcac7; margin: 1em; position: relative; padding: 1em;}
 .info-container > .demo-price{border: 1px solid #cdcac7; margin: 1em; position: relative; padding: 1em;}
+
 
 
 
