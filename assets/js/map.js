@@ -144,3 +144,4 @@ document.querySelectorAll('.filter-group input[type=checkbox]').forEach(function
 
 
 document.getElementById('close-emergency-modal-btn').addEventListener('click', closeInfo);
+document.querySelector('#legend').innerHTML = "<strong>GARBAGE PICK UP DAY</strong><nav class='legend clearfix'><span style='background:#377eb8;'></span><span style='background:#4daf4a;'></span><span style='background:#984ea3;'></span><span style='background:#ff7f00;'></span><span style='background:#e41a1c;'></span><label>Monday</label><label>Tuesday</label><label>Wednesday</label><label>Thursday</label><label>Friday</label></nav>";
