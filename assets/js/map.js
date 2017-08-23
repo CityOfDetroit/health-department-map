@@ -17,6 +17,8 @@ var directions = new MapboxDirections({
      instructions: true
    }
  });
+
+ 
 // add to your mapboxgl map
 map.on('load', function(window) {
 
@@ -140,6 +142,11 @@ document.querySelectorAll('.filter-group input[type=checkbox]').forEach(function
     toggleMapLayers(e);
   });
 });
+
+map.addControl(new MapboxGeocoder({
+    accessToken: mapboxgl.accessToken
+}));
+
 
 
 

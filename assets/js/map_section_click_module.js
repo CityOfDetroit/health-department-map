@@ -65,6 +65,33 @@ var mapSectionClickModule = (function(informationCard){
         document.querySelector('.info-container > .demo-date').innerHTML = '<span>Demolished On:</span> ' + feature.properties.demolition_date.split('T')[0];
         document.querySelector('.info-container > .demo-date').style.display = 'block';
       }
+      if (feature.properties.contractor_name=== undefined)
+      {
+        document.querySelector('.info-container > .contractor_name').style.display = 'none';
+      }
+      else{
+        document.querySelector('.info-container > .contractor_name').innerHTML = '<span>Contractor:</span> ' + feature.properties.contractor_name
+        document.querySelector('.info-container > .contractor_name').style.display = 'block';
+      }
+      if (feature.properties.demolish_by_date === undefined)
+      {
+        document.querySelector('.info-container > .demolish_by_date').style.display = 'none';
+      }
+      else{
+        document.querySelector('.info-container > .demolish_by_date').innerHTML = '<span>Demolish By Date:</span> ' + feature.properties.demolish_by_date.split('T')[0];
+        document.querySelector('.info-container > .demolish_by_date').style.display = 'block';
+      }
+      if (feature.properties.price === undefined)
+      {
+        document.querySelector('.info-container > .demo-price').style.display = 'none';
+      }
+      else{
+        document.querySelector('.info-container > .demo-price').innerHTML = '<span>Cost of Demolition: </span> ' + feature.properties.price;
+        document.querySelector('.info-container > .demo-price').style.display = 'block';
+      }
+
+
+
 
       (document.querySelector('#info').className === 'active') ? 0 : document.querySelector('#info').className = 'active';
 
