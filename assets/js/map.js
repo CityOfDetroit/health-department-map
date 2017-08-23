@@ -116,7 +116,7 @@ map.on('load', function(window) {
 
   map.on("mousemove", function(e) {
     var features = map.queryRenderedFeatures(e.point, {
-      layers: ["demolitions"]
+      layers: ['demolitions', 'upcoming-demolitions', 'event-locations']
     });
     map.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
   });
