@@ -82,35 +82,32 @@ map.on('load', function(window) {
        });
 
   map.loadImage('assets/img/cross-green.png', function(error, image) {
-        if (error) throw error;
-        map.addImage('cross-green', image);
-        map.addLayer({
-            "id": "demolitions",
-            "type": "symbol",
-            "source": 'demolitions',
-            "layout": {
-                "icon-image": "cross-green",
-                "icon-size": 1
-            }
-        });
-
-        map.loadImage('assets/img/cross-red.png', function(error, image) {
-                if (error) throw error;
-                map.addImage('cross-red', image);
-                map.addLayer({
-                    "id": "upcoming-demolitions",
-                    "type": "symbol",
-                    "source": 'upcoming-demolitions',
-                    "layout": {
-                    "icon-image": "cross-red",
-                    "icon-size": 1
-                          }
-                      });
-                        });
-
-
-
+    if (error) throw error;
+    map.addImage('cross-green', image);
+    map.addLayer({
+        "id": "demolitions",
+        "type": "symbol",
+        "source": 'demolitions',
+        "layout": {
+            "icon-image": "cross-green",
+            "icon-size": 1
+        }
     });
+
+    map.loadImage('assets/img/cross-red.png', function(error, image) {
+      if (error) throw error;
+      map.addImage('cross-red', image);
+      map.addLayer({
+          "id": "upcoming-demolitions",
+          "type": "symbol",
+          "source": 'upcoming-demolitions',
+          "layout": {
+          "icon-image": "cross-red",
+          "icon-size": 1
+                }
+            });
+      });
+  });
 
 
 
