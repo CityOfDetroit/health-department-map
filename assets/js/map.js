@@ -28,11 +28,6 @@ map.on('load', function(window) {
     data: 'http://gis.detroitmi.gov/arcgis/rest/services/NeighborhoodsApp/council_district/MapServer/1/query?where=districts%3D%273%27&text=&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&relationParam=&outFields=&returnGeometry=true&returnTrueCurves=false&maxAllowableOffset=&geometryPrecision=&outSR=&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=false&resultOffset=&resultRecordCount=&f=geojson'
   });
 
-  map.addSource('council-label', {
-    type: 'geojson',
-    data: 'http://gis.detroitmi.gov/arcgis/rest/services/Boundaries/Council_Districts/MapServer/0/query?where=number%3D3&text=&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&relationParam=&outFields=&returnGeometry=true&returnTrueCurves=false&maxAllowableOffset=&geometryPrecision=&outSR=&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=false&resultOffset=&resultRecordCount=&f=geojson'
-  });
-
 
 // total demolitions
   map.addSource('demolitions', {
@@ -50,7 +45,7 @@ map.on('load', function(window) {
 
   map.addSource('events', {
     type: 'geojson',
-    data: 'https://services2.arcgis.com/qvkbeam7Wirps6zC/arcgis/rest/services/D3/FeatureServer/0/query?where=1%3D1&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&resultType=none&distance=0.0&units=esriSRUnit_Meter&returnGeodetic=false&outFields=*&returnHiddenFields=false&returnGeometry=true&multipatchOption=xyFootprint&maxAllowableOffset=&geometryPrecision=&outSR=4326&returnIdsOnly=false&returnCountOnly=false&returnExtentOnly=false&returnDistinctValues=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&resultOffset=&resultRecordCount=&returnZ=false&returnM=false&quantizationParameters=&sqlFormat=none&f=pgeojson&token=x-gzcfnhA8XKlRxwEsRsB41pd_6sG4oxTj_dNLUOEF2Yvv2qu2PyRdaX5WPGfRXdHG9E3toJKIGMuQoHortzeH335AUpT4yS_s7aO3hoLqAl9dOULTZzXBnKX24dtA8yqQTRWVQahkCeIEFOcEFxRjXJVzwmVevbRfgLUmIQhmFNkKN6ZnkOhzvja3JaNLRMmUYJOO1vBN-XsgKZUXPBx8R_SXzG9HGfWGKHQEXpznz5OemyITulG-KIoKp4Xw1J'
+    data: 'https://services2.arcgis.com/qvkbeam7Wirps6zC/arcgis/rest/services/D3/FeatureServer/0/query?where=1%3D1&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&resultType=none&distance=0.0&units=esriSRUnit_Meter&returnGeodetic=false&outFields=*&returnHiddenFields=false&returnGeometry=true&multipatchOption=xyFootprint&maxAllowableOffset=&geometryPrecision=&outSR=4326&returnIdsOnly=false&returnCountOnly=false&returnExtentOnly=false&returnDistinctValues=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&resultOffset=&resultRecordCount=&returnZ=false&returnM=false&quantizationParameters=&sqlFormat=none&f=pgeojson'
   });
 
 
@@ -67,19 +62,13 @@ map.on('load', function(window) {
   });
 
   map.addLayer({
-    "id": "councils-label",
-    "type": "symbol",
-    "source": "councils-label",
-  });
-
-  map.addLayer({
-           id: 'event-locations',
-           type: 'symbol',
-           source: 'events',
-           layout: {
-               'icon-image': 'marker-15'
-           }
-       });
+     id: 'event-locations',
+     type: 'symbol',
+     source: 'events',
+     layout: {
+         'icon-image': 'marker-15'
+     }
+ });
 
   map.loadImage('assets/img/cross-green.png', function(error, image) {
     if (error) throw error;
