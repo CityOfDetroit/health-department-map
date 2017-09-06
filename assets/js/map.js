@@ -10,14 +10,15 @@ var map = new mapboxgl.Map({
   zoom: 12, // starting zoom
   maxBounds: bounds
 });
-var directions = new MapboxDirections({
-   accessToken: mapboxgl.accessToken,
-   controls: {
-     inputs: false,
-     instructions: true
-   }
- });
-
+ var getRequest = function getRequest(theUrl, callback){
+   var xmlHttp = new XMLHttpRequest();
+   xmlHttp.onreadystatechange = function() {
+       if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+           callback(xmlHttp.response);
+   };
+   xmlHttp.open("GET", theUrl, true); // true for asynchronous
+   xmlHttp.send(null);
+ };
 
 // add to your mapboxgl map
 map.on('load', function(window) {
@@ -48,6 +49,23 @@ map.on('load', function(window) {
     data: 'https://services2.arcgis.com/qvkbeam7Wirps6zC/arcgis/rest/services/D3/FeatureServer/0/query?where=1%3D1&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&resultType=none&distance=0.0&units=esriSRUnit_Meter&returnGeodetic=false&outFields=*&returnHiddenFields=false&returnGeometry=true&multipatchOption=xyFootprint&maxAllowableOffset=&geometryPrecision=&outSR=4326&returnIdsOnly=false&returnCountOnly=false&returnExtentOnly=false&returnDistinctValues=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&resultOffset=&resultRecordCount=&returnZ=false&returnM=false&quantizationParameters=&sqlFormat=none&f=pgeojson'
   });
 
+  getRequest('https://services2.arcgis.com/qvkbeam7Wirps6zC/arcgis/rest/services/D3/FeatureServer/0/query?where=1%3D1&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&resultType=none&distance=0.0&units=esriSRUnit_Meter&returnGeodetic=false&outFields=*&returnGeometry=true&multipatchOption=xyFootprint&maxAllowableOffset=&geometryPrecision=&outSR=4326&returnIdsOnly=false&returnCountOnly=true&returnExtentOnly=false&returnDistinctValues=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&resultOffset=&resultRecordCount=&returnZ=false&returnM=false&quantizationParameters=&sqlFormat=none&f=json&token=', function(response){
+    console.log(JSON.parse(response));
+    var events = JSON.parse(response);
+    document.querySelector('#info .info-container .past-events').innerHTML = '<span>Past Events:</span> ' + events.count;
+  });
+
+  getRequest('https://data.detroitmi.gov/resource/uzpg-2pfj.geojson?council_district=3&$limit=50000', function(response){
+    console.log(JSON.parse(response));
+    var pastDemos = JSON.parse(response);
+    document.querySelector('#info .info-container .past-demos-num').innerHTML = '<span class="green-tag">Past Demolitions:</span> ' + pastDemos.features.length.toLocaleString();
+  });
+
+  getRequest('https://data.detroitmi.gov/resource/nfx3-ihbp.geojson?council_district=3&$limit=50000', function(response){
+    console.log(JSON.parse(response));
+    var comingDemos = JSON.parse(response);
+    document.querySelector('#info .info-container .upcoming-demos-num').innerHTML = '<span class="red-tag">Upcoming Demolitions:</span> ' + comingDemos.features.length.toLocaleString();
+  });
 
 
   map.addLayer({

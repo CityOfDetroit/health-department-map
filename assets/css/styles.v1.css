@@ -3,24 +3,11 @@ body { margin:0; padding:0; font-family: 'Open Sans', sans-serif;}
 main {position: relative; width: 100%; height: 100vh; overflow: hidden;}
 #map {width: 100%; height: 100vh;}
 #info {width: 25em; height: 100vh; background-color: #fff;position: absolute; top: 0 ;left: -29em; z-index: 5; padding: 2em 0;transition: all 0.2s ease-in-out;}
-.info-container > article{padding: 0 1em; margin-bottom: 1em;}
-.info-container > .street-name{font-family: 'Roboto', sans-serif; font-size: 1.5em; font-weight: bold; color: #EB002B; text-align: center;}
-.info-container > .garbage, .info-container > .recycle, .info-container > .bulk, .info-container > .provider, .info-container > .yard, .info-container > .district{border: 1px solid #cdcac7; margin: 1em; position: relative; padding: 1em;}
-.info-container > .facility{font-family: 'Roboto', sans-serif; font-size: 1.5em; font-weight: bold; color: #0099cc; text-align: center;padding-bottom: 1em;}
-.info-container > .text{border: 1px solid #cdcac7; margin: 1em; position: relative; padding: 1em;}
-.info-container > .video_link{border: 1px solid #cdcac7; margin: 1em; position: relative; padding: 1em;}
-.info-container > .parcel_id{border: 1px solid #cdcac7; margin: 1em; position: relative; padding: 1em;}
-.info-container > .contractor_name{border: 1px solid #cdcac7; margin: 1em; position: relative; padding: 1em;}
-.info-container > .demo-date{border: 1px solid #cdcac7; margin: 1em; position: relative; padding: 1em;}
-.info-container > .demo-price{border: 1px solid #cdcac7; margin: 1em; position: relative; padding: 1em;}
-.info-container > .demolish_by_date{border: 1px solid #cdcac7; margin: 1em; position: relative; padding: 1em;}
-
-
-
-
-.info-container > .note{border: 1px solid #cdcac7; font-size: 80%; margin: 1em 1.25em; position: relative; padding: 1em;}
-.info-container > .parcel_id, .info-container > .contractor_name, .info-container > .demo-date, .info-container > .demo-cost{border: 1px solid #cdcac7; margin: 1em; position: relative; padding: 1em;}
-.info-container > .directions{text-align: center;}
+.info-container article{border: 1px solid #cdcac7; margin: 1em; position: relative; padding: 1em;}
+.info-container .title-name{font-family: 'Roboto', sans-serif; font-size: 1.5em; font-weight: bold; color: #EB002B; text-align: center; border-bottom: 1px solid #cdcac7; padding: 0 .5em 1em .5em; margin-bottom: 1em;}
+.info-container article > span{position: absolute; top: -.75em; left: 1em; background-color: #fff; padding: 0 .5em; font-weight: bold}
+.info-container article > span.red-tag{color: #a21421}
+.info-container article > span.green-tag{color: #015e2c}
 .btn{padding: .5em; background-color: #EB002B; color: #fff; border: none; font-size: 1em; cursor: pointer; transition: all 0.2s ease-in-out; margin-top: 1em;}
 .btn:hover{padding: .7em; transition: all 0.2s ease-in-out;}
 .btn:disabled{background-color: #8e1229;}
@@ -145,7 +132,7 @@ main {position: relative; width: 100%; height: 100vh; overflow: hidden;}
   #close-emergency-modal-btn{
     cursor: pointer;
     position: absolute;
-    right: -.5em;
+    right: .5em;
     top: .5em;
     width: 2em;
     height: 2em;
@@ -206,7 +193,7 @@ main {position: relative; width: 100%; height: 100vh; overflow: hidden;}
   #close-emergency-modal-btn{
     cursor: pointer;
     position: absolute;
-    right: -.5em;
+    right: .5em;
     top: .5em;
     width: 2em;
     height: 2em;

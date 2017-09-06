@@ -25,112 +25,19 @@ var mapSectionClickModule = (function(informationCard){
         var tempHTML = "";
         switch (feature.layer.id) {
           case 'demolitions':
-            tempHTML = '<article class="title-name">' + feature.properties.address + '</article><article class="parcel"><span>Parcel ID:</span> ' + feature.properties.parcel_id + '</article><article class="contractor">' + feature.properties.contractor_name +;
+            tempHTML = '<div class="title-name">' + feature.properties.address + '</div><article class="parcel"><span>Parcel ID:</span> ' + feature.properties.parcel_id + '</article><article class="contractor"><span>Contractor:</span> ' + feature.properties.contractor_name + '</article><article class="demolish_by_date"><span>Demolished on:</span> ' + moment(feature.properties.demolition_date).format('MMMM Do YYYY') + '</article><article class="demo-price"><span>Cost of Demolition:</span> $' + parseInt(feature.properties.price).toLocaleString() + '</article>';
             break;
           case 'upcoming-demolitions':
-
+            tempHTML = '<div class="title-name">' + feature.properties.address + '</div><article class="parcel"><span>Parcel ID:</span> ' + feature.properties.parcel_id + '</article><article class="contractor"><span>Contractor:</span> ' + feature.properties.contractor_name + '</article><article class="demolish_by_date"><span>Demolish by:</span> ' + moment(feature.properties.demolish_by_date).format('MMMM Do YYYY') + '</article>';
             break;
           default:
-
+            var temp = feature.properties.video_link.split('/');
+            tempHTML = '<div class="title-name">' + feature.properties.facility + '</div><article class="address"><span>Address:</span> ' + feature.properties.address + '</article><article class="video_link"><iframe width="340" height="315" src="https://www.youtube.com/embed/'+ temp[temp.length - 1] + '" frameborder="0" allowfullscreen></iframe></article><article class="text"><span>Description :</span> ' + feature.properties.text + '</article>';
         }
-        document.querySelector('.info-container > .street-name').innerHTML = feature.properties.address;
-        if(feature.properties.facility === undefined){
-          document.querySelector('.info-container > .facility').style.display = 'none';
-        }else{
-          document.querySelector('.info-container > .facility').innerHTML = '<span></span> ' + feature.properties.facility;
-          document.querySelector('.info-container > .facility').style.display = 'block';
-        }
-        if(feature.properties.text === undefined){
-          document.querySelector('.info-container > .text').style.display = 'none';
-        }else{
-          document.querySelector('.info-container > .text').innerHTML = '<span></span> ' + feature.properties.text;
-          document.querySelector('.info-container > .text').style.display = 'block';
-        }
-        if(feature.properties.video_link === undefined){
-          document.querySelector('.info-container > .video_link').style.display = 'none';
-        }else{
-          var temp = feature.properties.video_link.split('/');
-          document.querySelector('.info-container > .video_link').innerHTML = '<iframe width="340" height="315" src="https://www.youtube.com/embed/'+ temp[temp.length - 1] + '" frameborder="0" allowfullscreen></iframe>';
-          document.querySelector('.info-container > .video_link').style.display = 'block';
-        }
-        if (feature.properties.parcel_id === undefined){
-          document.querySelector('.info-container > .parcel_id').style.display = 'none';
-        }else{
-          document.querySelector('.info-container > .parcel_id').innerHTML = '<span>Parcel ID:</span> ' + feature.properties.parcel_id;
-          document.querySelector('.info-container > .parcel_id').style.display = 'block';
-        }
-        if (feature.properties.demolition_date === undefined)
-        {
-          document.querySelector('.info-container > .demo-date').style.display = 'none';
-        }
-        else{
-          document.querySelector('.info-container > .demo-date').innerHTML = '<span>Demolished On:</span> ' + feature.properties.demolition_date.split('T')[0];
-          document.querySelector('.info-container > .demo-date').style.display = 'block';
-        }
-        if (feature.properties.contractor_name=== undefined)
-        {
-          document.querySelector('.info-container > .contractor_name').style.display = 'none';
-        }
-        else{
-          document.querySelector('.info-container > .contractor_name').innerHTML = '<span>Contractor:</span> ' + feature.properties.contractor_name
-          document.querySelector('.info-container > .contractor_name').style.display = 'block';
-        }
-        if (feature.properties.demolish_by_date === undefined)
-        {
-          document.querySelector('.info-container > .demolish_by_date').style.display = 'none';
-        }
-        else{
-          document.querySelector('.info-container > .demolish_by_date').innerHTML = '<span>Demolish By Date:</span> ' + feature.properties.demolish_by_date.split('T')[0];
-          document.querySelector('.info-container > .demolish_by_date').style.display = 'block';
-        }
-        if (feature.properties.price === undefined)
-        {
-          document.querySelector('.info-container > .demo-price').style.display = 'none';
-        }
-        else{
-          document.querySelector('.info-container > .demo-price').innerHTML = '<span>Cost of Demolition: </span> ' + feature.properties.price;
-          document.querySelector('.info-container > .demo-price').style.display = 'block';
-        }
-
-
-
-
+        document.querySelector('#info .info-container .panel-content').innerHTML = tempHTML;
         (document.querySelector('#info').className === 'active') ? 0 : document.querySelector('#info').className = 'active';
-
-
       }else{
-        features = map.queryRenderedFeatures(e.point, { layers: ['event-locations'] });
-        if(features.length){
-          console.log(features[0]);
-          map.flyTo({
-              center: [e.lngLat.lng, e.lngLat.lat],
-              zoom: 12,
-              bearing: 0,
-              speed: 2,
-              curve: 1,
-              easing: function (t) {
-                  return t;
-              }
-          });
-          document.querySelector('.info-container input[name="lng"]').value = e.lngLat.lng;
-          document.querySelector('.info-container input[name="lat"]').value = e.lngLat.lat;
-          document.querySelector('.info-container > .street-name').innerHTML = feature.properties.address;
-          document.querySelector('.info-container > .facility').innerHTML = '<span></span> ' + feature.properties.facility;
-          document.querySelector('.info-container > .text').innerHTML = '<span>About:</span> ' + feature.properties.text;
-          document.querySelector('.info-container > .text').innerHTML = '<span>About:</span> ' + feature.properties.video_link;
-          document.querySelector('.info-container > .parcel_id').innerHTML = '<span>Parcel ID:</span> ' + feature.properties.parcel_id;
-          document.querySelector('.info-container > .contractor_name').innerHTML = '<span>Contractor:</span> ' + feature.properties.contractor_name;
-          document.querySelector('.info-container > .demo-date').innerHTML = '<span>Demolished On:</span> ' + feature.properties.demolition_date;
-          document.querySelector('.info-container > .demo-cost').innerHTML = '<span>Cost of Demolition:</span> ' + feature.properties.price;
-          (document.querySelector('#info').className === 'active') ? 0 : document.querySelector('#info').className = 'active';
-        }else{
-          features = map.queryRenderedFeatures(e.point, { layers: ['upcoming-demolitions'] });
-          if(features.length){
-            console.log(features[0]);
-          }else{
-            console.log('no data for this point');
-          }
-        }
+        console.log('no data for this point');
       }
     });
   });
