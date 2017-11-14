@@ -13,8 +13,12 @@ var map = new mapboxgl.Map({
 var directions = new MapboxDirections({
    accessToken: mapboxgl.accessToken,
    controls: {
-     inputs: false,
-     instructions: true
+     inputs: true,
+     instructions: true,
+     profileSwitcher: true
+   },
+   geocoder: {
+     bbox: bounds
    }
  });
 // add to your mapboxgl map
@@ -51,13 +55,33 @@ map.on('load', function(window) {
             "layout": {
                 "icon-image": "heart",
                 "icon-size": 0.5
-            }
+            },
+            "filter": ['!in', "Affiliatio", "Detroit Community Health Connection - Woodward Corridor Family Health Center -Teen Clinic", "CHASS Center","Planned Parenthood-Detroit Health Center"]
         });
     });
+    map.loadImage('assets/img/like.png', function(error, image) {
+          if (error) throw error;
+          map.addImage('teen', image);
+          map.addLayer({
+              "id": "offices-teen",
+              "type": "symbol",
+              "source": 'offices',
+              "layout": {
+                  "icon-image": "teen",
+                  "icon-size": 0.5
+              },
+              "filter": ['in', "Affiliatio", "Detroit Community Health Connection - Woodward Corridor Family Health Center -Teen Clinic", "CHASS Center","Planned Parenthood-Detroit Health Center"]
+          });
+      });
   map.on("mousemove", function(e) {
     var features = map.queryRenderedFeatures(e.point, {
       layers: ["offices"]
     });
+    if(!features.length){
+      var features = map.queryRenderedFeatures(e.point, {
+        layers: ["offices-teen"]
+      });
+    }
     map.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
   });
 });
@@ -86,8 +110,28 @@ document.querySelectorAll('.filter-group input[type=checkbox]').forEach(function
 function successFunction(position) {
     var lat = position.coords.latitude;
     var long = position.coords.longitude;
-    console.log('Your latitude is :'+lat+' and longitude is '+long);
-    directions = directions.setOrigin([long,lat]);
+    proj4.defs("EPSG:4326","+proj=longlat +datum=WGS84 +no_defs");
+    proj4.defs('EPSG:2253', "+proj=lcc +lat_1=43.66666666666666 +lat_2=42.1 +lat_0=41.5 +lon_0=-84.36666666666666 +x_0=3999999.999984 +y_0=0 +ellps=GRS80 +datum=NAD83 +to_meter=0.3048 +no_defs");
+    // creating source and destination Proj4js objects
+    // once initialized, these may be re-used as often as needed
+    var source = new proj4.Proj("EPSG:4326");    //source coordinates will be in Longitude/Latitude
+    var dest = new proj4.Proj("EPSG:2253");     //destination coordinates in LCC, south of France
+    // transforming point coordinates
+    var p = proj4(source, dest, [long,lat]);     //any object will do as long as it has 'x' and 'y' properties
+        //do the transformation.  x and y are modified in place
+    //p.x and p.y are now EPSG:27563 easting and northing in meters
+    console.log(p);
+    let url = "http://gis.detroitmi.gov/arcgis/rest/services/DoIT/CompositeGeocoder/GeocodeServer/reverseGeocode?location=" + p[0] + "%2C" + p[1] + "&distance=&langCode=&outSR=4326&returnIntersection=false&f=pjson";
+    fetch(url)
+    .then((resp) => resp.json()) // Transform the data into json
+    .then(function(data) {
+      console.log(data);
+      if(data.address){
+        directions = directions.setOrigin(data.address.Street);
+      }else{
+        console.log('no address found');
+      }
+    });
 }
 function errorFunction(e){
   alert("Geolocation permission was denied. Please enable Geolocation.")
@@ -96,7 +140,8 @@ function errorFunction(e){
 document.getElementById('close-emergency-modal-btn').addEventListener('click', closeInfo);
 
 var loadDirections = function loadDirections(){
-  directions.setDestination([document.querySelector('.info-container input[name="lng"]').value, document.querySelector('.info-container input[name="lat"]').value]);
+  console.log(document.querySelector('.info-container input[name="address"]'));
+  directions.setDestination(document.querySelector('.info-container input[name="address"]').value);
   document.querySelector('.mapboxgl-ctrl-directions.mapboxgl-ctrl').style.display = "block";
   closeInfo();
 };

@@ -7,27 +7,26 @@
   <meta name="description" content="Health Department Map">
   <meta name="author" content="Edgar Montes & Dexter Slursarski">
   <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.39.1/mapbox-gl.css' rel='stylesheet' />
+  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.42.0/mapbox-gl.js'></script>
   <link href='assets/css/styles.v1.css' rel='stylesheet' />
   <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v3.1.1/mapbox-gl-directions.css' type='text/css' />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.39.1/mapbox-gl.js'></script>
+  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.42.0/mapbox-gl.css' rel='stylesheet' />
   <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v3.1.1/mapbox-gl-directions.js'></script>
+  <script src='assets/js/proj4.js'></script>
 </head>
 <body>
   <main>
     <section id="info">
       <section class="info-container">
-        <input type="hidden" name="lng" value="">
-        <input type="hidden" name="lat" value="">
+        <input type="hidden" name="address" value="">
         <article class="street-name"></article>
-        <article class="district"></article>
-        <article class="provider"></article>
-        <article class="larc-type"></article>
-        <article class="age-type"></article>
-        <article class="std-testing"></article>
-        <article class="other-media"></article>
-        <article class="offer_abor"></article>
+        <article class="district border-box"></article>
+        <article class="provider border-box"></article>
+        <article class="hours border-box"></article>
+        <article class="larc-type border-box"></article>
+        <article class="age-type border-box"></article>
+        <article class="std-testing border-box"></article>
         <article class="directions">
           <button class="btn btn-red" id="directions-btn">SHOW DIRECTIONS</button>
         </article>

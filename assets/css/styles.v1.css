@@ -4,18 +4,16 @@ main {position: relative; width: 100%; height: 100vh; overflow: hidden;}
 #map {width: 100%; height: 100vh;}
 #info {width: 25em; height: 100vh; background-color: #fff;position: absolute; top: 0 ;left: -29em; z-index: 5; padding: 2em 0;transition: all 0.2s ease-in-out;}
 #info.active {width: 25em; height: 100vh; background-color: #fff;position: absolute; top: 0;left: 0; z-index: 5; padding: 2em 0;transition: all 0.2s ease-in-out;max-width: 95%;}
-.info-container > article{padding: 0 1em; margin-bottom: 1em;}
+.info-container > article{padding: 0 1em 2em 1em; margin-bottom: 1em;}
 .info-container > .street-name{font-family: 'Roboto', sans-serif; font-size: 1.5em; font-weight: bold; color: #EB002B; border-bottom: 1px solid #cdcac7; text-align: center;padding-bottom: 1em;}
 .info-container > .garbage, .info-container > .recycle, .info-container > .bulk, .info-container > .provider, .info-container > .yard, .info-container > .district{border: 1px solid #cdcac7; margin: 1em; position: relative; padding: 1em;}
 .info-container > .garbage > span{color: #BD0019}
 .info-container > .recycle > span{color: #068A24}
 .info-container > .bulk > span{color: #114BC7}
 .info-container > .yard > span{color: #DF5800}
-.info-container > .larc-type{border: 1px solid #cdcac7; margin: 1em; position: relative; padding: 1em;}
-.info-container > .age-type{border: 1px solid #cdcac7; margin: 1em; position: relative; padding: 1em;}
-.info-container > .std-testing{border: 1px solid #cdcac7; margin: 1em; position: relative; padding: 1em;}
+.info-container > .border-box{border: 1px solid #cdcac7; margin: 1em; position: relative; padding: 1em;}
 .info-container > .note{border: 1px solid #cdcac7; font-size: 80%; margin: 1em 1.25em; position: relative; padding: 1em;}
-.info-container > .note > span, .info-container > .bulk > span, .info-container > .recycle > span, .info-container > .garbage > span, .info-container > .provider > span, .info-container > .larc-type > span,.info-container > .age-type > span,.info-container > .std-testing > span, .info-container > .district > span,  .info-container > .district > span{position: absolute; top: -.75em; left: 1em; background-color: #fff; padding: 0 .5em; font-weight: bold}
+.info-container > .border-box span{position: absolute; top: -.75em; left: 1em; background-color: #fff; padding: 0 .5em; font-weight: bold}
 .info-container > .directions{text-align: center;}
 .btn{padding: .5em; background-color: #EB002B; color: #fff; border: none; font-size: 1em; cursor: pointer; transition: all 0.2s ease-in-out; margin-top: 1em;}
 .btn:hover{padding: .7em; transition: all 0.2s ease-in-out;}
