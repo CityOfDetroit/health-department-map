@@ -10,20 +10,7 @@ var map = new mapboxgl.Map({
   zoom: 10.5, // starting zoom
   maxBounds: bounds
 });
-var directions = new MapboxDirections({
-   accessToken: mapboxgl.accessToken,
-   controls: {
-     inputs: true,
-     instructions: true,
-     profileSwitcher: true
-   },
-   geocoder: {
-     bbox: bounds
-   }
- });
-// add to your mapboxgl map
-map.addControl(directions, 'top-right');
-console.log('added directions');
+
 map.on('load', function(window) {
   map.addSource('councils', {
     type: 'geojson',
@@ -92,58 +79,30 @@ function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-document.addEventListener("DOMContentLoaded", function(event) {
-  if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(successFunction, errorFunction);
-  } else {
-      alert('It seems like Geolocation, which is required for this page, is not enabled in your browser. Please use a browser which supports it.');
-  }
-  console.log(map);
-});
-
 document.querySelectorAll('.filter-group input[type=checkbox]').forEach(function(item) {
   item.addEventListener('click',function(e){
     toggleMapLayers(e);
   });
 });
 
-function successFunction(position) {
-    var lat = position.coords.latitude;
-    var long = position.coords.longitude;
-    proj4.defs("EPSG:4326","+proj=longlat +datum=WGS84 +no_defs");
-    proj4.defs('EPSG:2253', "+proj=lcc +lat_1=43.66666666666666 +lat_2=42.1 +lat_0=41.5 +lon_0=-84.36666666666666 +x_0=3999999.999984 +y_0=0 +ellps=GRS80 +datum=NAD83 +to_meter=0.3048 +no_defs");
-    // creating source and destination Proj4js objects
-    // once initialized, these may be re-used as often as needed
-    var source = new proj4.Proj("EPSG:4326");    //source coordinates will be in Longitude/Latitude
-    var dest = new proj4.Proj("EPSG:2253");     //destination coordinates in LCC, south of France
-    // transforming point coordinates
-    var p = proj4(source, dest, [long,lat]);     //any object will do as long as it has 'x' and 'y' properties
-        //do the transformation.  x and y are modified in place
-    //p.x and p.y are now EPSG:27563 easting and northing in meters
-    console.log(p);
-    let url = "http://gis.detroitmi.gov/arcgis/rest/services/DoIT/CompositeGeocoder/GeocodeServer/reverseGeocode?location=" + p[0] + "%2C" + p[1] + "&distance=&langCode=&outSR=4326&returnIntersection=false&f=pjson";
-    fetch(url)
-    .then((resp) => resp.json()) // Transform the data into json
-    .then(function(data) {
-      console.log(data);
-      if(data.address){
-        directions = directions.setOrigin(data.address.Street);
-      }else{
-        console.log('no address found');
-      }
-    });
-}
-function errorFunction(e){
-  alert("Geolocation permission was denied. Please enable Geolocation.")
-}
-
 document.getElementById('close-emergency-modal-btn').addEventListener('click', closeInfo);
 
 var loadDirections = function loadDirections(){
-  console.log(document.querySelector('.info-container input[name="address"]'));
-  directions.setDestination(document.querySelector('.info-container input[name="address"]').value);
-  document.querySelector('.mapboxgl-ctrl-directions.mapboxgl-ctrl').style.display = "block";
-  closeInfo();
+  var cleanAddr = '';
+  var tempAddr = document.querySelector('.info-container input[name="address"]').value;
+  tempAddr = tempAddr.split('(')[0];
+  tempAddr = tempAddr.split('-')[0];
+  tempAddr = tempAddr.split(' ');
+  for (let index = 0; index < tempAddr.length; index++) {
+    if(tempAddr[index] != ''){
+      cleanAddr += tempAddr[index];
+      if(index < (tempAddr.length - 2)){
+        cleanAddr += '+';
+      }
+    }
+  }
+  var win = window.open("https://www.google.com/maps/dir/''/" + cleanAddr, '_blank');
+  win.focus();
 };
 
 document.getElementById('directions-btn').addEventListener('click', loadDirections);

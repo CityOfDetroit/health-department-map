@@ -5,7 +5,6 @@ var mapSectionClickModule = (function(informationCard){
     return (!m) ? null : "(" + m[1] + ") " + m[2] + "-" + m[3];
   };
   var loadPanel = function loadPanel(point,feature){
-    console.log(feature);
     map.flyTo({
         center: [point.lngLat.lng, point.lngLat.lat],
         zoom: 12,
@@ -16,7 +15,6 @@ var mapSectionClickModule = (function(informationCard){
             return t;
         }
     });
-    document.querySelector('.mapboxgl-ctrl-directions.mapboxgl-ctrl').style.display = "none";
     document.querySelector('.info-container input[name="address"]').value = feature.properties.Address;
     document.querySelector('.info-container > .street-name').innerHTML = feature.properties.Affiliatio;
     document.querySelector('.info-container > .district').innerHTML = '<span>Address:</span> ' + feature.properties.Address + '<br>' + feature.properties.City + ', ' + feature.properties.State + ' ' + feature.properties.Zip;
@@ -28,7 +26,7 @@ var mapSectionClickModule = (function(informationCard){
     (document.querySelector('#info').className === 'active') ? 0 : document.querySelector('#info').className = 'active';
   };
   map.on('click', function (e) {
-    console.log(e);
+    // console.log(e);
     var features = map.queryRenderedFeatures(e.point, { layers: ['offices'] });
     if(features.length){
       let feature = features[0];
