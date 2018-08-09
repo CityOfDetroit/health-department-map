@@ -32,7 +32,7 @@ map.on('load', function(window) {
       "line-width": 2
     }
   });
-  map.loadImage('assets/img/hearts.png', function(error, image) {
+  map.loadImage('assets/img/place.png', function(error, image) {
         if (error) throw error;
         map.addImage('heart', image);
         map.addLayer({
@@ -41,12 +41,12 @@ map.on('load', function(window) {
             "source": 'offices',
             "layout": {
                 "icon-image": "heart",
-                "icon-size": 0.5
+                "icon-size": 0.75
             },
             "filter": ['!in', "Affiliatio", "Detroit Community Health Connection - Woodward Corridor Family Health Center -Teen Clinic", "CHASS Center","Planned Parenthood-Detroit Health Center"]
         });
     });
-    map.loadImage('assets/img/like.png', function(error, image) {
+    map.loadImage('assets/img/place.png', function(error, image) {
           if (error) throw error;
           map.addImage('teen', image);
           map.addLayer({
@@ -55,7 +55,7 @@ map.on('load', function(window) {
               "source": 'offices',
               "layout": {
                   "icon-image": "teen",
-                  "icon-size": 0.5
+                  "icon-size": 0.75
               },
               "filter": ['in', "Affiliatio", "Detroit Community Health Connection - Woodward Corridor Family Health Center -Teen Clinic", "CHASS Center","Planned Parenthood-Detroit Health Center"]
           });
