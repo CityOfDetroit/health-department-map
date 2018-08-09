@@ -16,13 +16,13 @@ var mapSectionClickModule = (function(informationCard){
         }
     });
     document.querySelector('.info-container input[name="address"]').value = feature.properties.Address;
-    document.querySelector('.info-container > .street-name').innerHTML = feature.properties.Affiliatio;
+    document.querySelector('.info-container > .street-name').innerHTML = feature.properties.Affiliation_Office;
     document.querySelector('.info-container > .district').innerHTML = '<span>Address:</span> ' + feature.properties.Address + '<br>' + feature.properties.City + ', ' + feature.properties.State + ' ' + feature.properties.Zip;
-    document.querySelector('.info-container > .provider').innerHTML = '<span>Phone:</span> ' + formatPhoneNumber(feature.properties.Phone_1);
+    document.querySelector('.info-container > .provider').innerHTML = '<span>Phone:</span> ' + formatPhoneNumber(feature.properties.Phone);
     document.querySelector('.info-container > .hours').innerHTML = '<span>Hours:</span> 9AM - 5PM';
     document.querySelector('.info-container > .larc-type').innerHTML = '<span>LARC Type: </span> ' + feature.properties.LARC_Type;
     document.querySelector('.info-container > .age-type').innerHTML = '<span>Age Range: </span> ' + feature.properties.Age_Range;
-    document.querySelector('.info-container > .std-testing').innerHTML = '<span>STD Testing: </span> ' + feature.properties.STD_Testin;
+    document.querySelector('.info-container > .std-testing').innerHTML = '<span>STD Testing: </span> ' + feature.properties.STD_Testing;
     (document.querySelector('#info').className === 'active') ? 0 : document.querySelector('#info').className = 'active';
   };
   map.on('click', function (e) {

@@ -19,7 +19,7 @@ map.on('load', function(window) {
 
   map.addSource('offices', {
     type: 'geojson',
-    data: 'https://gis.detroitmi.gov/arcgis/rest/services/DoIT/LARC/MapServer/0/query?where=1%3D1&text=&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&relationParam=&outFields=*&returnGeometry=true&returnTrueCurves=false&maxAllowableOffset=&geometryPrecision=&outSR=&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=false&resultOffset=&resultRecordCount=&f=geojson'
+    data: 'https://services2.arcgis.com/qvkbeam7Wirps6zC/arcgis/rest/services/LARC_Locations(revise)/FeatureServer/0/query?where=1%3D1&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&resultType=none&distance=0.0&units=esriSRUnit_Meter&returnGeodetic=false&outFields=*&returnHiddenFields=false&returnGeometry=true&multipatchOption=xyFootprint&maxAllowableOffset=&geometryPrecision=&outSR=4326&datumTransformation=&applyVCSProjection=false&returnIdsOnly=false&returnUniqueIdsOnly=false&returnCountOnly=false&returnExtentOnly=false&returnDistinctValues=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&having=&resultOffset=&resultRecordCount=&returnZ=false&returnM=false&returnExceededLimitFeatures=true&quantizationParameters=&sqlFormat=none&f=geojson'
   });
 
   map.addLayer({
@@ -42,24 +42,9 @@ map.on('load', function(window) {
             "layout": {
                 "icon-image": "heart",
                 "icon-size": 0.75
-            },
-            "filter": ['!in', "Affiliatio", "Detroit Community Health Connection - Woodward Corridor Family Health Center -Teen Clinic", "CHASS Center","Planned Parenthood-Detroit Health Center"]
+            }
         });
     });
-    map.loadImage('assets/img/place.png', function(error, image) {
-          if (error) throw error;
-          map.addImage('teen', image);
-          map.addLayer({
-              "id": "offices-teen",
-              "type": "symbol",
-              "source": 'offices',
-              "layout": {
-                  "icon-image": "teen",
-                  "icon-size": 0.75
-              },
-              "filter": ['in', "Affiliatio", "Detroit Community Health Connection - Woodward Corridor Family Health Center -Teen Clinic", "CHASS Center","Planned Parenthood-Detroit Health Center"]
-          });
-      });
   map.on("mousemove", function(e) {
     var features = map.queryRenderedFeatures(e.point, {
       layers: ["offices"]
